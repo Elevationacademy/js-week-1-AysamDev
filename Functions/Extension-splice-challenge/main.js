@@ -1,73 +1,78 @@
-const deleteOneElement = function(array,start)
-{
-    array
-}
 
-const insertElements = function(array,start,item1,item2)
-{   
-    let count = 0
-    if(item1 !=undefined)
-    {
-        count++;
-    }
-    if(item2 != undefined)
-    {
-        count++
-    }
-    console.log(count)
-
-          if(count>1)
-          {
-                array.concat([...array.slice(0,start),item1,item2,...array.slice(start)])
-    
-            count = 0
-            console.log(array)
-            
-          }
-          else if(count == 1)
-          {
-            array = [...array.slice(0,start),item1,...array.slice(start)]
-          }
-          else
-          {
-              console.log("you have no items to add")
-          }
-
-}
-const splice = function(array,start = 0,deleteCount = array.length - 1,item1 = undefined,item2 = undefined){
+const splice = function(array,start,deleteCount){
     let deletedItems = []
-
-    if(start>array.length)
-    {
-        start = array.length
-    }
-
+    let temp = []
+    let argsLen = arguments.length
     if(start < 0)
     {
-        start = array.length - 1 + start
+        start = array.length + start
+        if(start>0)
+        {
+            start = start
+        }
+        else
+            start = 0
+    }
+    else
+    {
+        if(start < array.length)
+        {
+            start = start
+        }
+        else
+        {
+            start = array.length
+        }
+    }
+    if(deleteCount < 0)
+    {
+        deleteCount = 0
     }
 
-    if(array.length + start < 0 )
+    if(deleteCount > (array.length - start))
     {
-        start = 0
+        deleteCount = array.length - start
+    }
+    if(deleteCount == undefined)
+    {
+        deleteCount = array.length
+    }
+
+    for(let i = 0; i < start;i++)
+    {
+        temp[i] = array[i]
+    }
+
+    // Add new elements supplied as args
+    for (let i = 3; i < argsLen; i++)
+    {
+        
+        temp.push(arguments[i])
+    }
+
+    // Copy removed items to removed array
+    for (let i = start; i < start + deleteCount; i++)
+    {
+        if(array[i]!=undefined)
+        deletedItems.push(array[i])
+    }
+    // copy the rest of the array
+    for(let i = start+(deleteCount||0);i<array.length;i++)
+    {
+        temp.push(array[i])
     }
     
-    if(deleteCount >= array.length - start)
+    array.length = 0
+    for(let i = 0;i<temp.length;i++)
     {
-        start = 0
-        deleteCount = array.length - 1
+        array[i] = temp[i]
     }
-    if(deleteCount == 0 || deleteCount < 0)
-    {
+    console.log(deletedItems)
+    return deletedItems
 
-        array = insertElements(array,start,item1,item2)
-        return deletedItems
-    }
 
-    deleteOneElement()
-    
 }
 
 let num =  [1,2,3]
-splice(num,0,0,-1,0)
+splice(num,1,1,55)
 console.log(num)
