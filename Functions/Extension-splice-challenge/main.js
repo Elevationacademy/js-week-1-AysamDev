@@ -24,6 +24,7 @@ const splice = function(array,start,deleteCount){
             start = array.length
         }
     }
+    
     if(deleteCount < 0)
     {
         deleteCount = 0
@@ -61,7 +62,7 @@ const splice = function(array,start,deleteCount){
     {
         temp.push(array[i])
     }
-    
+    //modifying the original array
     array.length = 0
     for(let i = 0;i<temp.length;i++)
     {
